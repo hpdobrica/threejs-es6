@@ -1,4 +1,7 @@
+import * as THREE from './vendor/three.module.js';
 import SceneManager from './SceneManager.js';
+
+global.THREE = THREE;
 
 const canvas = document.getElementById('app');
 const sceneManager = new SceneManager(canvas);
