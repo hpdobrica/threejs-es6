@@ -50,12 +50,13 @@ export default class SceneManager{
         this.renderer = new THREE.WebGLRenderer({
             canvas: canvas,
             antialias: true,
-            alpha: true
+            alpha: true,
+             preserveDrawingBuffer: true
         });
         const DPR = (window.devicePixelRatio) ? window.devicePixelRatio : 1;
         this.renderer.setPixelRatio(DPR);
         this.renderer.setSize(width, height);
-
+        this.renderer.autoClearColor   = false;
         this.renderer.gammaInput = true;
         this.renderer.gammaOutput = true;
     }
@@ -64,9 +65,11 @@ export default class SceneManager{
         const aspectRatio = width / height;
         const fieldOfView = 60;
         const nearPlane = 1;
-        const farPlane = 100;
+        const farPlane = 2000;
         this.camera = new THREE.PerspectiveCamera(fieldOfView, aspectRatio, nearPlane, farPlane);
+        this.camera.position.z = 2000;
 
+        global.camera = this.camera;
     }
     _createSceneSubjects(){
         this.sceneSubjects = [
