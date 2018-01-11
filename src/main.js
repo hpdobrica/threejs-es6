@@ -1,17 +1,35 @@
 import * as THREE from './vendor/three.module.js';
-import SceneManager from './SceneManager.js';
+window.THREE = THREE;
+require('./lib/orbitControls.js');
+require('./lib/gltfLoader.js');
+require('./lib/effectComposer.js');
 
-global.THREE = THREE;
+import SceneManager from './SceneManager.js';
 
 const canvas = document.getElementById('app');
 const sceneManager = new SceneManager(canvas);
 
 bindEventListeners();
+
+//automatically start render loop, comment out to stop
 render();
 
 function bindEventListeners() {
-    window.onresize = resizeCanvas;
-    resizeCanvas();
+    window.onresize = function () {
+        canvas.style.width = '100%';
+        canvas.style.height = '100%';
+
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        sceneManager.onWindowResize(canvas);
+    };
+
+    //start render loop on Anim3D custom event (when model is loaded)
+    // document.addEventListener('Anim3D', function (e) {
+    //     render();
+    // });
+
 }
 
 function render() {
@@ -19,12 +37,3 @@ function render() {
     sceneManager.update();
 };
 
-function resizeCanvas() {
-    canvas.style.width = '100%';
-    canvas.style.height= '100%';
-
-    canvas.width  = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-
-    sceneManager.onWindowResize(canvas);
-}

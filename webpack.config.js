@@ -8,10 +8,10 @@ module.exports = {
         filename: 'main.bundle.js'
     },
     plugins: [
-        new MinifyPlugin({}, {
-            test: /\.js$/,
-            sourceMap: ""
-        })
+        // new MinifyPlugin({}, {
+        //     test: /\.js$/,
+        //     sourceMap: ""
+        // })
     ],
     module: {
         loaders: [
@@ -27,5 +27,10 @@ module.exports = {
     stats: {
         colors: true
     },
-    devtool: 'source-map'
+    devtool: 'source-map',
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 9000
+    }
 };
